@@ -66,7 +66,7 @@
 
             if(currentBuzzObject.isPaused()) {
 
-              currentBuzzObject.play();
+              playSong(song);
             }
          }
      };
