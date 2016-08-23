@@ -4,17 +4,31 @@
   * @desc function that will be passed to the factory service
   * @returns {Object} SongPlayer
   */
-  function SongPlayer() {
+  function SongPlayer(Fixtures) {
      /*
      * @desc object that will hold public methods for playing and pausing a song
      * @type {Object}
      */
      var SongPlayer = {};
      /*
+     * @desc private variable that hold the current album object
+     * @type {Object}
+     */
+     var currentAlbum = Fixtures.getAlbum();
+     /*
      * @desc Buzz object audio file
      * @type {Object}
      */
      var currentBuzzObject = null;
+     /*
+     * @function getSongIndex
+     * @desc This fuctions takes in a song object and return the index of the song in the current album
+     * @param {Object} song
+     * @returns {Number}
+     */
+     var getSongIndex = function(song) {
+       return currentAlbum.songs.indexOf(song);
+     }
      /*
      * @function setSong
      * @desc Stops currently playing song and loads new audio file as currentBuzzObject
@@ -24,7 +38,7 @@
 
         if(currentBuzzObject){
           currentBuzzObject.stop();
-          currentSong.playing = null;
+          SongPlayer.currentSong.playing = null;
         }
 
         currentBuzzObject = new buzz.sound(song.audioUrl, {
@@ -32,7 +46,7 @@
             preload: true
         });
 
-        currentSong = song;
+        SongPlayer.currentSong = song;
      };
 
      /*
@@ -56,13 +70,13 @@
      * @param {Object} song
      */
      SongPlayer.play = function(song) {
-
-         if(currentSong !== song) {
+         song = song || SongPlayer.currentSong;
+         if(SongPlayer.currentSong !== song) {
 
              setSong(song);
              playSong(song);
 
-         } else if(currentSong == song) {
+         } else if(SongPlayer.currentSong == song) {
 
             if(currentBuzzObject.isPaused()) {
 
@@ -77,9 +91,27 @@
      * @param {Object} song
      */
      SongPlayer.pause = function(song) {
-
+         song = song || SongPlayer.currentSong;
          currentBuzzObject.pause();
          song.playing = false;
+     };
+     /*
+     * @function in SongPlayer object
+     * @desc it plays the previous song on the album tracklisting
+     * unless it is the first song then it will stop the current song
+     */
+     SongPlayer.previous = function() {
+         var currentSongIndex = getSongIndex(SongPlayer.currentSong);
+         currentSongIndex--;
+
+         if(currentSongIndex < 0) {
+           currentBuzzObject.stop();
+           SongPlayer.currentSong.playing = null;
+         } else {
+           var song = currentAlbum.songs[currentSongIndex];
+           setSong(song);
+           playSong(song);
+         }
      };
 
      return SongPlayer;
