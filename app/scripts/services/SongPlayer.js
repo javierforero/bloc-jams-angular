@@ -128,6 +128,16 @@
          }
      };
      /*
+     * @function setCurrentTime
+     * @desc Set current time (in seconds) of currently playing song
+     * @param {Number} time
+     */
+     SongPlayer.setCurrentTime = function(time) {
+         if (currentBuzzObject) {
+             currentBuzzObject.setTime(time);
+         }
+     };
+     /*
      * @function in SongPlayer object
      * @desc it plays the next song on the album tracklisting
      * unless it is the last song then it will stop the current song
@@ -143,17 +153,6 @@
            var song = currentAlbum.songs[currentSongIndex];
            setSong(song);
            playSong(song);
-         }
-     };
-
-     /*
-     * @function setCurrentTime
-     * @desc Set current time (in seconds) of currently playing song
-     * @param {Number} time
-     */
-     SongPlayer.setCurrentTime = function(time) {
-         if (currentBuzzObject) {
-             currentBuzzObject.setTime(time);
          }
      };
 

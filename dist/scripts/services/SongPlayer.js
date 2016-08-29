@@ -74,6 +74,11 @@
      */
      SongPlayer.currentSong = null;
      /*
+     * @desc Current playback time (in seconds) of currently playing song
+     * @type {Number}
+     */
+     SongPlayer.currentTime = null;
+     /*
      * @function in SongPlayer object
      * @desc plays a specified song
      * @param {Object} song
@@ -120,6 +125,16 @@
            var song = currentAlbum.songs[currentSongIndex];
            setSong(song);
            playSong(song);
+         }
+     };
+     /*
+     * @function setCurrentTime
+     * @desc Set current time (in seconds) of currently playing song
+     * @param {Number} time
+     */
+     SongPlayer.setCurrentTime = function(time) {
+         if (currentBuzzObject) {
+             currentBuzzObject.setTime(time);
          }
      };
      /*
