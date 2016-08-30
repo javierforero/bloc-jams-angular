@@ -157,7 +157,7 @@
      */
      SongPlayer.setVolume = function (newVolume) {
          if(currentBuzzObject) {
-             console.log("this is new volume", newVolume)
+           
              currentBuzzObject.setVolume(newVolume);
          }
          SongPlayer.volume = newVolume;
