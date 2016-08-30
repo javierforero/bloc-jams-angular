@@ -85,6 +85,12 @@
      */
      SongPlayer.currentTime = null;
      /*
+     * @desc variable that will set the volume of the song
+     * it has an initial value of 50
+     * @type {Number}
+     */
+     SongPlayer.volume = 50;
+     /*
      * @function in SongPlayer object
      * @desc plays a specified song
      * @param {Object} song
@@ -143,6 +149,18 @@
              currentBuzzObject.setTime(time);
          }
          SongPlayer.currentTime = time;
+     };
+     /*
+     * @function setVolume
+     * @desc Sets volume of currently playing song
+     * @param {Number} newVolume
+     */
+     SongPlayer.setVolume = function (newVolume) {
+         if(currentBuzzObject) {
+             console.log("this is new volume", newVolume)
+             currentBuzzObject.setVolume(newVolume);
+         }
+         SongPlayer.volume = newVolume;
      };
      /*
      * @function in SongPlayer object
