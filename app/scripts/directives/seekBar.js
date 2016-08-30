@@ -42,7 +42,7 @@
 
                var notifyOnChange = function(newValue) {
                    if (typeof scope.onChange === 'function') {
-                       console.log("i RAN!");
+                     
                        scope.onChange({value: newValue});
                    }
                };

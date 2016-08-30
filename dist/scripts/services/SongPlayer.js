@@ -4,7 +4,7 @@
   * @desc function that will be passed to the factory service
   * @returns {Object} SongPlayer
   */
-  function SongPlayer(Fixtures) {
+  function SongPlayer($rootScope, Fixtures) {
      /*
      * @desc object that will hold public methods for playing and pausing a song
      * @type {Object}
@@ -46,6 +46,12 @@
             preload: true
         });
 
+        currentBuzzObject.bind('timeupdate', function() {
+
+            $rootScope.$apply(function() {
+                SongPlayer.currentTime = currentBuzzObject.getTime();
+            });
+        });
         SongPlayer.currentSong = song;
      };
 
@@ -136,6 +142,7 @@
          if (currentBuzzObject) {
              currentBuzzObject.setTime(time);
          }
+         SongPlayer.currentTime = time;
      };
      /*
      * @function in SongPlayer object
@@ -161,5 +168,5 @@
 
   angular
      .module('blocJams')
-     .factory('SongPlayer', SongPlayer);
+     .factory('SongPlayer', ['$rootScope', 'Fixtures',SongPlayer]);
 })();
