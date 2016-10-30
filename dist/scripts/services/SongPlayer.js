@@ -97,7 +97,10 @@
      */
      SongPlayer.play = function(song) {
          song = song || SongPlayer.currentSong;
-         if(SongPlayer.currentSong !== song) {
+         if(!song) {
+            setSong(currentAlbum.songs[0]);
+            playSong(currentAlbum.songs[0]);
+         } else if(SongPlayer.currentSong !== song && song) {
 
              setSong(song);
              playSong(song);
@@ -157,7 +160,7 @@
      */
      SongPlayer.setVolume = function (newVolume) {
          if(currentBuzzObject) {
-           
+
              currentBuzzObject.setVolume(newVolume);
          }
          SongPlayer.volume = newVolume;
